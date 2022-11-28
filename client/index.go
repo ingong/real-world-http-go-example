@@ -7,13 +7,13 @@ import (
 )
 
 func main() {
-	transport := &http.Transport{}
-	transport.RegisterProtocol("file", http.NewFileTransport(http.Dir(".")))
-	client := http.Client{
-		Transport: transport,
+	client := &http.Client{}
+	req, err := http.NewRequest("DELETE", "http://localhost:18888", nil)
+	if err != nil {
+		panic(err)
 	}
 
-	resp, err := client.Get("file://./index.go")
+	resp, err := client.Do(req)
 	if err != nil {
 		panic(err)
 	}
